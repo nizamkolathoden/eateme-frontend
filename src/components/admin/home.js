@@ -27,7 +27,10 @@ export default function Home() {
       }),
     })
       .then((res) => res.json())
-      .then((respon) => console.log(respon));
+      .then((respon) => {
+        console.log(respon);
+        if (respon.error) alert(respon.error);
+      });
   };
   //push
   if (!admin) history.push("/admin/login");
