@@ -10,7 +10,7 @@ export default function Home() {
   const [pic, setPic] = useState("");
   const [category, setCategory] = useState("");
   const token = localStorage.getItem("edemeAdminToken").replace(/['"]+/g, "");
-  console.log(localStorage.getItem("edemeAdminToken"));
+  // console.log(localStorage.getItem("edemeAdminToken"));
   const submit = () => {
     fetch("http://localhost:8080/api/admin/addfood", {
       method: "Post",
