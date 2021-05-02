@@ -2,23 +2,23 @@ import React, { useEffect, useState } from "react";
 import Nav from './nav'
 import { useHistory } from "react-router";
 
-function Burger() {
+function Others() {
  const history = useHistory()
  const user = localStorage.getItem("userToken")
  const token =user?user.replace(/['"]+/g, ""):"";
  
-  const [burgerData, setBurgerData] = useState([]);
+  const [otherData, setOtherData] = useState([]);
  
   
   useEffect(() => {
-    fetch("http://localhost:8080/api/food/Burger")
+    fetch("http://localhost:8080/api/food/Other")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setBurgerData(data);
+        setOtherData(data);
       });
   }, []);
-  const orderFood = (orderedFood,foodName) =>{
+  const orderFood = (orderedFood) =>{
     console.log(orderedFood);
     fetch('http://localhost:8080/api/order/food',{
       method:'PUT',
@@ -27,11 +27,11 @@ function Burger() {
         Authorization: `bearer ${token}`,
       },
       body: JSON.stringify({
-        orderedFood,
-        orderName:foodName
+        orderedFood
       })
     }).then(res=>res.json())
     .then(data=>{
+        console.log(data);
       if(data.error) {
       alert(data.error)
       }else{
@@ -45,7 +45,7 @@ function Burger() {
     <div>
         <Nav/>
         <div className="row">
-      {burgerData.map((singleItem) => {
+      {otherData.map((singleItem) => {
         return (
           <>
             <div className="col s12 m6" key={singleItem._id}>
@@ -71,7 +71,7 @@ function Burger() {
             name="action"
             onClick={()=>{
               
-              localStorage.getItem('userToken')?orderFood(singleItem._id,singleItem.foodname):history.push(`/login/${singleItem._id}/${singleItem.foodname}`)}
+              localStorage.getItem('userToken')?orderFood(singleItem._id):history.push(`/login/${singleItem._id}`)}
             }>
             Order Food
           </button>
@@ -86,4 +86,4 @@ function Burger() {
   );
 }
 
-export default Burger;
+export default Others;

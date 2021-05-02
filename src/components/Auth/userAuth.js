@@ -4,7 +4,10 @@ import Logo from "../../asset/svgg.svg";
 function UserAuth() {
     const [name,setName] = useState('')
     const [email,setEmail] = useState('')
-    const {id} = useParams();
+    const {id,foodName} = useParams();
+    
+
+    console.log(foodName)
     const history = useHistory()
   const sendData = () => {
     fetch("http://localhost:8080/api/register/user", {
@@ -15,7 +18,8 @@ function UserAuth() {
       body:JSON.stringify({
           name,
           email,
-          orderedFood:id
+          orderedFood:id,
+          orderName:foodName
       })
     }).then(res=>res.json()).then(data=>{
         console.log(data);
